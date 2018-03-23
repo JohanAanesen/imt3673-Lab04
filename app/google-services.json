@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "985989698078",
+    "firebase_url": "https://imt3673-lab04-chat.firebaseio.com",
+    "project_id": "imt3673-lab04-chat",
+    "storage_bucket": "imt3673-lab04-chat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:985989698078:android:92b20b3985571882",
+        "android_client_info": {
+          "package_name": "com.example.johanaanesen.imt3673_lab04"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "985989698078-tdt5m864htdlv7fo3j56rabb2bu26gn9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.johanaanesen.imt3673_lab04",
+            "certificate_hash": "56981db19d871732e73fd5595097ec446dd687c9"
+          }
+        },
+        {
+          "client_id": "985989698078-p34lutqfs585lh3vd20301nvh01na99j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnINXQu_kFEuTOd9SYe_GfF0n5AhJLZ-8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "985989698078-p34lutqfs585lh3vd20301nvh01na99j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
