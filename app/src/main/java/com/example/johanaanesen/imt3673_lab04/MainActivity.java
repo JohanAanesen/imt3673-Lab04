@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -17,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
@@ -54,14 +58,14 @@ public class MainActivity extends AppCompatActivity {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot ds: dataSnapshot.getChildren()) {
-                    Message msg = dataSnapshot.getValue(Message.class);
+                listContentArr.clear();
+                for(DataSnapshot child: dataSnapshot.getChildren()) {
+                    Message msg = child.getValue(Message.class);
                     listContentArr.add(msg);
-                    Log.d("kjør", "onDataChange() returned: " + msg.getMessage());
-                    //We set the array to the adapter
-                    adapter.setListContent(listContentArr);
-                    //We in turn set the adapter to the RecyclerView
-                    recyclerView.setAdapter(adapter);
+
+                    refreshListAdapter();
+
+                    recyclerView.scrollToPosition(listContentArr.size()-1);
                 }
             }
 
@@ -75,8 +79,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView=(RecyclerView)findViewById(R.id.recycleView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter=new CustomAdapter(this);
-        //Method call for populating the view
-        displayChatMessages();
+        recyclerView.scrollToPosition(listContentArr.size()-1);
     }
 
     public void addMessages(Map<String,Object> users) {
@@ -96,23 +99,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void displayChatMessages(){
-
-     //   String userId = myRef.push().getKey();
-
-     //   Message msg = new Message("Johan", "Fuck");
-       // listContentArr.add(msg);
-
-    //    myRef.child(userId).setValue(msg);
+    public void refreshListAdapter(){
         //We set the array to the adapter
         adapter.setListContent(listContentArr);
         //We in turn set the adapter to the RecyclerView
         recyclerView.setAdapter(adapter);
     }
 
-    public void saveNewMessage(String user, String message){
+    public void sendNewMessage(View view){
+        EditText editText = findViewById(R.id.sendText);
+        String text = editText.getText().toString();
 
+        Log.d("shit.", "sendNewMessage() returned: " + text);
+        if (!text.isEmpty()){
+            Message msg = new Message(USERNAME, text, new Date().getTime());
 
+            String userId = myRef.push().getKey();
+            myRef.child(userId).setValue(msg);
+        }
     }
 
 }

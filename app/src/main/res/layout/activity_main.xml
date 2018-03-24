@@ -6,10 +6,32 @@
     android:layout_height="match_parent"
     tools:context="com.example.johanaanesen.imt3673_lab04.MainActivity">
 
+    <EditText
+        android:id="@+id/sendText"
+        android:layout_width="296dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Message"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/sendBtn"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/sendBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="sendNewMessage"
+        android:text="Send"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/sendText" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycleView"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        app:layout_constraintBottom_toTopOf="@id/sendText"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
     </android.support.v7.widget.RecyclerView>
 </android.support.constraint.ConstraintLayout>

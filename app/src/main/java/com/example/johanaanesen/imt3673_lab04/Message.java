@@ -15,10 +15,10 @@ public class Message {
     public Message(){
     }
 
-    public Message(String user, String message){
-        this.date = new Date().getTime();
+    public Message(String user, String message, long date){
         this.user = user;
         this.message = message;
+        this.date = date;
     }
 
     public String getMessage(){
