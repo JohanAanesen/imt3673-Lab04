@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
 
-    //Creating an arraylist of POJO objects
     private ArrayList<Message> list_members=new ArrayList<>();
     private final LayoutInflater inflater;
     View view;

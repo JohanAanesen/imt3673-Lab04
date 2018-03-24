@@ -110,7 +110,6 @@ public class MainActivity extends AppCompatActivity {
         EditText editText = findViewById(R.id.sendText);
         String text = editText.getText().toString();
 
-        Log.d("shit.", "sendNewMessage() returned: " + text);
         if (!text.isEmpty()){
             Message msg = new Message(USERNAME, text, new Date().getTime());
 
