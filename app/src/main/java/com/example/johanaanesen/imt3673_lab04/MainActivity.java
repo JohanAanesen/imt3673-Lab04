@@ -60,8 +60,6 @@ public class MainActivity extends AppCompatActivity {
                     msgList.add(msg);
 
                     refreshListAdapter();
-
-                    recyclerView.scrollToPosition(msgList.size()-1);
                 }
             }
 
@@ -74,24 +72,8 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView=(RecyclerView)findViewById(R.id.recycleView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter=new CustomAdapter(this);
-        recyclerView.scrollToPosition(msgList.size()-1);
-    }
-
-    public void addMessages(Map<String,Object> users) {
-
-        ArrayList<Long> phoneNumbers = new ArrayList<>();
-
-        //iterate through each user, ignoring their UID
-        for (Map.Entry<String, Object> entry : users.entrySet()){
-
-            //Get user map
-            Map singleUser = (Map) entry.getValue();
-            //Get phone field and append to list
-            phoneNumbers.add((Long) singleUser.get("phone"));
-        }
-
-        System.out.println(phoneNumbers.toString());
+        adapter=new CustomAdapter(this, USERNAME);
+        refreshListAdapter();
     }
 
 
@@ -100,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
         adapter.setListContent(msgList);
         //We in turn set the adapter to the RecyclerView
         recyclerView.setAdapter(adapter);
+        //Scroll to bottom :)
+        recyclerView.scrollToPosition(msgList.size()-1);
     }
 
     public void sendNewMessage(View view){
@@ -112,6 +96,8 @@ public class MainActivity extends AppCompatActivity {
             String userId = myRef.push().getKey();
             myRef.child(userId).setValue(msg);
         }
+
+        editText.setText("");
     }
 
 }

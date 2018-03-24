@@ -11,27 +11,56 @@ import java.util.ArrayList;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
 
+    private static final int MESSAGE_SENT = 1;
+    private static final int MESSAGE_RECEIVED = 2;
+
     private ArrayList<Message> list_members=new ArrayList<>();
     private final LayoutInflater inflater;
     View view;
     MyViewHolder holder;
     private Context context;
+    private String USERNAME;
 
-    public CustomAdapter(Context context){
+    public CustomAdapter(Context context, String username){
         this.context=context;
         inflater=LayoutInflater.from(context);
+        this.USERNAME = username;
     }
+
+    @Override
+    public int getItemViewType(int position) {
+        Message message = (Message) list_members.get(position);
+
+        if (message.getUser().equals(this.USERNAME)) {
+            // If the current user is the sender of the message
+            return MESSAGE_SENT;
+        } else {
+            // If some other user sent the message
+            return MESSAGE_RECEIVED;
+        }
+    }
+
     //This method inflates view present in the RecyclerView
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        view=inflater.inflate(R.layout.message_received, parent, false);
-        holder=new MyViewHolder(view);
-        return holder;
+        if (viewType == MESSAGE_SENT){
+            view=inflater.inflate(R.layout.message_sent, parent, false);
+            holder=new MyViewHolder(view);
+            return holder;
+        }else if(viewType == MESSAGE_RECEIVED){
+            view=inflater.inflate(R.layout.message_received, parent, false);
+            holder=new MyViewHolder(view);
+            return holder;
+        }
+        return null;
     }
+
+
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         Message list_items=list_members.get(position);
+
         holder.message_name.setText(list_items.getUser());
         holder.message_content.setText(list_items.getMessage());
         //holder.time.setText(list_items.getMsgTime());
@@ -55,6 +84,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         public MyViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
+
             message_name=(TextView)itemView.findViewById(R.id.message_name);
             message_content=(TextView)itemView.findViewById(R.id.message_content);
            // time=(TextView)itemView.findViewById(R.id.time);
