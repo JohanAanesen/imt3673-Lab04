@@ -7,40 +7,41 @@ import java.util.Date;
 
 @IgnoreExtraProperties
 public class Message {
-    private long d;
-    private String u;
-    private String m;
+
+    public String user;
+    public String message;
+    public long date;
 
     public Message(){
     }
 
-    public Message(String u, String m){
-        this.d = new Date().getTime();
-        this.u = u;
-        this.m = m;
+    public Message(String user, String message){
+        this.date = new Date().getTime();
+        this.user = user;
+        this.message = message;
     }
 
     public String getMessage(){
-        return this.m;
+        return this.message;
     }
 
     public String getUser(){
-        return this.u;
+        return this.user;
     }
 
-    public long getMsgTime(){
-        return this.d;
+    public long getDate(){
+        return this.date;
     }
 
-    public void setMessage(String m){
-        this.m = m;
+    public void setMessage(String message){
+        this.message = message;
     }
 
-    public void setMsgTime(long d){
-        this.d = d;
+    public void setDate(long date){
+        this.date = date;
     }
 
-    public void setUser(String u){
-        this.u = u;
+    public void setUser(String user){
+        this.user = user;
     }
 }
