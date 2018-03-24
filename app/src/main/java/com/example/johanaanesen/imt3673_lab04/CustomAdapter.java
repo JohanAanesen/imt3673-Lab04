@@ -29,7 +29,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         return holder;
     }
 
-    //Binding the data using get() method of POJO object
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         Message list_items=list_members.get(position);
