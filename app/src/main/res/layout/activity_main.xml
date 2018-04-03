@@ -26,44 +26,15 @@
 
     </android.support.design.widget.TabLayout>
 
-    <View
+    <android.support.v4.view.ViewPager
+        android:id="@+id/tabContainer"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray"
-        app:layout_constraintBottom_toTopOf="@id/sendText"
-        app:layout_constraintTop_toBottomOf="@id/recycleView" />
-
-    <EditText
-        android:id="@+id/sendText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/message"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/sendBtn"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/sendBtn"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:onClick="sendNewMessage"
-        android:text="@string/send"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycleView"
-        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="2dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:layout_constraintBottom_toTopOf="@+id/sendBtn"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabLayout">
+        app:layout_constraintTop_toBottomOf="@id/tabLayout" />
 
-    </android.support.v7.widget.RecyclerView>
 
 </android.support.constraint.ConstraintLayout>

@@ -1,35 +1,22 @@
 package com.example.johanaanesen.imt3673_lab04;
 
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.EditText;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private String USERNAME;
 
-    private FirebaseDatabase mDatabase;
-    private DatabaseReference myRef;
+    private CustomPagerAdapter mSectionsPagerAdapter;
 
-    RecyclerView recyclerView;
-    CustomAdapter adapter;
-
-    private ArrayList<Message> msgList= new ArrayList<>();
+    private ViewPager mViewPager;
 
 
     @Override
@@ -47,57 +34,49 @@ public class MainActivity extends AppCompatActivity {
             USERNAME = userChoice;
         }
 
-        this.mDatabase = FirebaseDatabase.getInstance();
-        this.myRef = mDatabase.getReference("messages");
+        mSectionsPagerAdapter = new CustomPagerAdapter(getSupportFragmentManager());
 
-        // Read from the database
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                msgList.clear();
-                for(DataSnapshot child: dataSnapshot.getChildren()) {
-                    Message msg = child.getValue(Message.class);
-                    msgList.add(msg);
+        // Set up the ViewPager with the sections adapter.
+        mViewPager = (ViewPager) findViewById(R.id.tabContainer);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
 
-                    refreshListAdapter();
-                }
-            }
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
 
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-               // Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
+        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
-        recyclerView=(RecyclerView)findViewById(R.id.recycleView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter=new CustomAdapter(this, USERNAME);
-        refreshListAdapter();
+
     }
 
 
-    public void refreshListAdapter(){
-        //We set the array to the adapter
-        adapter.setListContent(msgList);
-        //We in turn set the adapter to the RecyclerView
-        recyclerView.setAdapter(adapter);
-        //Scroll to bottom :)
-        recyclerView.scrollToPosition(msgList.size()-1);
-    }
 
-    public void sendNewMessage(View view){
-        EditText editText = findViewById(R.id.sendText);
-        String text = editText.getText().toString();
+    public class CustomPagerAdapter extends FragmentPagerAdapter {
 
-        if (!text.isEmpty()){
-            Message msg = new Message(USERNAME, text, new Date().getTime());
-
-            String userId = myRef.push().getKey();
-            myRef.child(userId).setValue(msg);
+        public CustomPagerAdapter(FragmentManager fm) {
+            super(fm);
         }
 
-        editText.setText("");
+        @Override
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 0:
+                    TabChat tab1 = new TabChat();
+                    return tab1;
+                case 1:
+                    TabUsers tab2 = new TabUsers();
+                    return tab2;
+                default:
+                    TabChat defTab = new TabChat();
+                    return defTab;
+            }
+        }
+
+        @Override
+        public int getCount() {
+            // Show 2 total pages.
+            return 2;
+        }
     }
+
 
 }
