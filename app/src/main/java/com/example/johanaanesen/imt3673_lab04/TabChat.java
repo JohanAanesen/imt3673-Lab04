@@ -46,10 +46,7 @@ public class TabChat extends Fragment {
         final SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(getContext());
         USERNAME = shared.getString("username", null);
 
-        //preferences = this.getActivity().getSharedPreferences("My_Preferences", MODE_PRIVATE);
         init(rootView);
-
-
 
         return rootView;
     }
@@ -76,7 +73,7 @@ public class TabChat extends Fragment {
             }
         });
 
-        recyclerView=(RecyclerView)rootView.findViewById(R.id.recycleView);
+        recyclerView=(RecyclerView)rootView.findViewById(R.id.recycleViewChat);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter=new CustomAdapter(getContext(), USERNAME);
 

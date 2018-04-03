@@ -3,7 +3,6 @@ package com.example.johanaanesen.imt3673_lab04;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
-import java.util.Date;
 
 @IgnoreExtraProperties
 public class Message {

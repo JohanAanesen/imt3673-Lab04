@@ -70,7 +70,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     public void setListContent(ArrayList<Message> list_members){
         this.list_members=list_members;
         notifyItemRangeChanged(0,list_members.size());
-
     }
 
     @Override
