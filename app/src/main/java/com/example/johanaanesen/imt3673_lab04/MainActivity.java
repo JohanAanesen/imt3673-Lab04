@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
 
         mSectionsPagerAdapter = new CustomPagerAdapter(getSupportFragmentManager());
 
-        // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.tabContainer);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
@@ -44,11 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
-
-
     }
-
-
 
     public class CustomPagerAdapter extends FragmentPagerAdapter {
 

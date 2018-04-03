@@ -59,7 +59,6 @@ public class TabUsers extends Fragment {
                     String name = child.getValue(String.class);
                     User user = new User(name);
                     users.add(user);
-                    Log.d("TEST: ", "onDataChange() returned: " + name);
                 }
                 refreshListAdapter();
             }
