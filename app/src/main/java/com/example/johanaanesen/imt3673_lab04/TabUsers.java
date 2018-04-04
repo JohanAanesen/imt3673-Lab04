@@ -21,6 +21,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 
 public class TabUsers extends Fragment {
@@ -60,6 +62,14 @@ public class TabUsers extends Fragment {
                     User user = new User(name);
                     users.add(user);
                 }
+
+                //sorting alphabetically with function from https://stackoverflow.com/a/2784576
+                Collections.sort(users, new Comparator<User>() {
+                    @Override
+                    public int compare(User o1, User o2) {
+                        return o1.getName().compareTo(o2.getName());
+                    }
+                });
                 refreshListAdapter();
             }
 
