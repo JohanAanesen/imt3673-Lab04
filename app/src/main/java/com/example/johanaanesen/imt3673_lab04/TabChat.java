@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -68,8 +69,7 @@ public class TabChat extends Fragment {
 
             @Override
             public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                // Log.w(TAG, "Failed to read value.", error.toException());
+                // rip
             }
         });
 
@@ -101,12 +101,18 @@ public class TabChat extends Fragment {
         String text = newMsg.getText().toString();
 
         if (!text.isEmpty()){
-            Message msg = new Message(USERNAME, text, new Date().getTime());
+            Date date=new Date();
+            SimpleDateFormat sfd = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+            String stringDate = sfd.format(date);
 
+
+            Message msg = new Message(USERNAME, text, stringDate);
+
+            //saving msg to firebase
             String userId = myRef.push().getKey();
             myRef.child(userId).setValue(msg);
         }
-
+        //remove text from editText
         newMsg.setText("");
     }
 }

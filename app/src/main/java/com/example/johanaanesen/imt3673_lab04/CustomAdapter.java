@@ -2,6 +2,7 @@ package com.example.johanaanesen.imt3673_lab04;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,7 +64,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
         holder.message_name.setText(list_items.getUser());
         holder.message_content.setText(list_items.getMessage());
-        //holder.time.setText(list_items.getMsgTime());
+        holder.message_time.setText(list_items.getTime());
     }
 
     //Setting the arraylist
@@ -79,20 +80,24 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
     //View holder class, where all view components are defined
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+
         TextView message_name,message_content,message_time;
+
         public MyViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
 
             message_name=(TextView)itemView.findViewById(R.id.message_name);
             message_content=(TextView)itemView.findViewById(R.id.message_content);
-           // time=(TextView)itemView.findViewById(R.id.time);
+            message_time=(TextView)itemView.findViewById(R.id.message_time);
         }
+
         @Override
         public void onClick(View v) {
-
+          //  Log.i("TEST:", "onClick: "+message_name.getText().toString());
         }
     }
+
     public void removeAt(int position) {
         list_members.remove(position);
         notifyItemRemoved(position);

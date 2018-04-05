@@ -1,6 +1,7 @@
 package com.example.johanaanesen.imt3673_lab04;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -125,16 +126,24 @@ public class TabUsers extends Fragment {
         public void setListContent(ArrayList<User> users){
             this.users=users;
             notifyItemRangeChanged(0, users.size());
-
         }
 
-        public class MyViewHolder extends RecyclerView.ViewHolder {
+        public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
             TextView nameTxt;
 
             public MyViewHolder(View itemView) {
                 super(itemView);
+                itemView.setOnClickListener(this);
                 nameTxt = (TextView) itemView.findViewById(R.id.userName);
+            }
+            @Override
+            public void onClick(View v) {
+                Log.i("TEST:", "onClick: "+nameTxt.getText().toString());
+
+                Intent intent = new Intent(getContext(), MessagesActivity.class);
+                intent.putExtra("users_nickname", nameTxt.getText().toString());
+                startActivity(intent);
             }
 
         }
