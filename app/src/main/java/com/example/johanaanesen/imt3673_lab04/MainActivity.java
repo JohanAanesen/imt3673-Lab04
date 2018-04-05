@@ -2,6 +2,7 @@ package com.example.johanaanesen.imt3673_lab04;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -123,8 +124,8 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
 
         if(alarmIntent != null) {
-            AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-            alarmManager.cancel(alarmIntent);
+            AlarmManager aManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+            aManager.cancel(this.alarmIntent);
         }
     }
 
