@@ -135,8 +135,8 @@ public class MainActivity extends AppCompatActivity {
 
         getPrefs();
         if(alarmIntent != null) {
-            AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-            alarmManager.cancel(alarmIntent);
+            AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+            alarmManager.cancel(this.alarmIntent);
         }
     }
 
