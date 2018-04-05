@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 
@@ -19,7 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class NotificationActivity extends IntentService {
-    static int oldMessages = 0;
+    static int oldMessages;
 
     private NotificationChannel channel;
     private NotificationManager notificationManager;
@@ -36,6 +37,9 @@ public class NotificationActivity extends IntentService {
 
     @Override
     public void onHandleIntent(@Nullable Intent intent) {
+
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        oldMessages = preferences.getInt("message_nr", 0);
 
         this.notificationManager = (NotificationManager) context.getSystemService(Service.NOTIFICATION_SERVICE);
 
@@ -64,6 +68,13 @@ public class NotificationActivity extends IntentService {
 
                 if (currentMessages > oldMessages) {
                     sendNotification(currentMessages-oldMessages);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putInt("message_nr", currentMessages);
+                    editor.apply();
+                }else if(currentMessages < oldMessages){
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putInt("message_nr", currentMessages);
+                    editor.apply();
                 }
 
                 oldMessages = currentMessages;
@@ -87,7 +98,8 @@ public class NotificationActivity extends IntentService {
                 .setContentTitle(diff+"New messages!")
                 .setContentText("Check them out now")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(this.pendingIntent);
+                .setContentIntent(this.pendingIntent)
+                .setAutoCancel(true);
         this.notificationManager.notify(0, builder.build());
 
     }

@@ -133,6 +133,10 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         getPrefs();
+        if(alarmIntent != null) {
+            AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+            alarmManager.cancel(alarmIntent);
+        }
     }
 
     @Override
