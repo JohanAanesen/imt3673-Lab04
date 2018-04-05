@@ -21,6 +21,14 @@
     </string>
     <string name="title_activity_settings">Settings</string>
 
+
+    <!-- notification related strings -->
+    <string name="channel_id">lab04</string>
+    <string name="channel_name">messagesChannel</string>
+    <string name="channel_description">notification</string>
+
+
+
     <!-- Strings related to Settings -->
 
     <!-- Example General settings -->

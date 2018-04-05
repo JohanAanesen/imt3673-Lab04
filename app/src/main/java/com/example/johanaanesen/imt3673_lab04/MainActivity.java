@@ -1,5 +1,7 @@
 package com.example.johanaanesen.imt3673_lab04;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,6 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,17 +25,18 @@ public class MainActivity extends AppCompatActivity {
 
     private ViewPager mViewPager;
 
+    private int updateFrequencySeconds;
+
+    PendingIntent alarmIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
         final SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(this);
         final String userChoice = shared.getString("username", null);
-
+        //new users need to pick a nickname :)
         if (userChoice == null ) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
@@ -49,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+
+        getPrefs();
     }
 
     @Override
@@ -102,5 +108,63 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed(){ // https://stackoverflow.com/a/42615612 answer i've used :)
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if(alarmIntent != null) {
+            AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+            alarmManager.cancel(alarmIntent);
+        }
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+
+        getPrefs();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Intent notificationIntent = new Intent(this, NotificationActivity.class);
+        alarmIntent = PendingIntent.getBroadcast(MainActivity.this, 0, notificationIntent, 0);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), updateFrequencySeconds * 1000, alarmIntent);
+
+        startService(notificationIntent);
+    }
+
+    public void getPrefs(){
+        // Get spinner shared state from Preferences
+        final SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(this);
+        final int freqSpinner = shared.getInt("freq-spinner", -1);
+
+        switch (freqSpinner){
+            case 0: updateFrequencySeconds = 5*60; //5 min in seconds // 300
+                break;
+            case 1: updateFrequencySeconds = 15*60; //15 min in seconds // 900
+                break;
+            case 2: updateFrequencySeconds = 60*60; //1 hour in seconds // 86400
+                break;
+            case 3: updateFrequencySeconds = 24*60*60; //1 day in seconds // 86400
+                break;
+            default: updateFrequencySeconds = 5*60; //default 5 min
+                break;
+        }
+    }
 
 }

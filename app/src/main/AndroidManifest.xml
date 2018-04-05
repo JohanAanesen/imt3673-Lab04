@@ -2,10 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.johanaanesen.imt3673_lab04">
 
-    <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -15,6 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service
+            android:name=".NotificationActivity"
+            android:exported="false" >
+
+        </service>
         <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="stateHidden">
@@ -29,6 +30,7 @@
             android:name=".SettingsActivity"
             android:parentActivityName=".MainActivity" />
         <activity android:name=".MessagesActivity"
+            android:parentActivityName=".MainActivity"
             />
     </application>
 

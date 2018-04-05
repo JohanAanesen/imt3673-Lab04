@@ -54,7 +54,7 @@ public class TabUsers extends Fragment {
         users = new ArrayList<>();
 
         // Read from the database
-        myRef.addValueEventListener(new ValueEventListener() {
+        myRef.orderByValue().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 users.clear();
@@ -63,14 +63,6 @@ public class TabUsers extends Fragment {
                     User user = new User(name);
                     users.add(user);
                 }
-
-                //sorting alphabetically with function from https://stackoverflow.com/a/2784576
-                Collections.sort(users, new Comparator<User>() {
-                    @Override
-                    public int compare(User o1, User o2) {
-                        return o1.getName().compareTo(o2.getName());
-                    }
-                });
                 refreshListAdapter();
             }
 

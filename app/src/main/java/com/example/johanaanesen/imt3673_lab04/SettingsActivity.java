@@ -11,7 +11,7 @@ import android.widget.Spinner;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    static final String SPINNER_CHOICE = "spinner-choice";
+    static final String FREQ_CHOICE = "freq-choice";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         // Get spinner shared state
         final SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(this);
-        final int userChoice = shared.getInt(SPINNER_CHOICE, 1);
+        final int userChoice = shared.getInt(FREQ_CHOICE, 1);
 
         spinner.setSelection(userChoice);
 
@@ -50,7 +50,7 @@ public class SettingsActivity extends AppCompatActivity {
                 if (item != null)
                 {
                     SharedPreferences.Editor editor = shared.edit();
-                    editor.putInt(SPINNER_CHOICE, position); // Storing integer
+                    editor.putInt(FREQ_CHOICE, position); // Storing integer
                     editor.apply(); // commit changes
 
                 }
